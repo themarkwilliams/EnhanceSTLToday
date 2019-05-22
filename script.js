@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Enhance STLToday
-// @version 1.5
+// @version 1.6
 // @description "A user script to automatically bypass the paywall by marking the content as free."
 // @match http*://*.stltoday.com/*
 // @run-at document-start
@@ -13,6 +13,7 @@
 1.3 - Attempt to remove the need to click to view the article. Also hide additional modal dialogs about Ad-Blocker - 5/9/19
 1.4 - Some articles have an overflow:hidden element that prevents scrolling. This attempts to fix that - 5/13/19
 1.5 - Overflow function was causing rest of script to fail. commented out - 5/22/19
+1.6 - Take 2 of removing Overflow via function - 5/22/19
 */
 
 GM_addStyle('.redacted-overlay { display:none !important; }'); // 4/11/18
@@ -21,17 +22,15 @@ GM_addStyle('.meter message { display:none !important; }'); // 4/11/18
 GM_addStyle('.fc-ab-root {display:none !important;}'); //5/9/19
 GM_addStyle('.modal-backdrop {display:none !important;}'); //5/9/19
 
-//5/13/19 - Get rid of Overflow:hidden on body
-//document.body.style.overflow = "visible !important";
-
 // Reference: https://stackoverflow.com/questions/39884983/change-class-value-using-greasemonkey
 waitForKeyElements (".subscriber-only", swapClass);
 waitForKeyElements (".modal-open", removeModal); //5/9/19
+waitForKeyElements ("body", removeOverflow); //5/22/19
 
 function swapClass (jNode) {
     console.log('Swap Class break...');
-    sleep(10000);
-    console.log('Ten seconds later, ...');
+    sleep(1000);
+    console.log('One seconds later, ...');
 
     jNode.removeClass("hide");
     jNode.addClass ("show");
@@ -46,7 +45,7 @@ function removeModal (jNode) { //5/9/19
 
     var element = document.body;
     element.classList.remove("modal-open");
-    element.style
+    element.style;
     console.log("modal removed : ", jNode);
 
     element = document.getElementById("lee-subscription-modal");
@@ -55,6 +54,15 @@ function removeModal (jNode) { //5/9/19
     element.classList.remove("in");
     GM_addStyle('.lee-subscription {display:none !important;}'); //5/9/19
     GM_addStyle('.lee-subscription-modal {display:none !important;}'); //5/9/19
+}
+
+function removeOverflow (jNode) { //5/22/19
+    console.log('Overflow Class break...');
+    sleep(10000);
+    console.log('Ten seconds later, ...');
+
+    jNode.removeClass("style");
+    console.log("cleaned node : ", jNode);
 }
 
 function sleep(ms) { //5/9/19
