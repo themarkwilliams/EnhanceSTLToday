@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Enhance STLToday
-// @version 1.9
+// @version 1.10
 // @description "A user script to automatically bypass the paywall by marking the content as free."
 // @match http*://*.stltoday.com/*
 // @run-at document-start
@@ -17,6 +17,7 @@
 1.7 - Unscribbled the redacted font family
 1.8 - Removed ad bars from UI
 1.9 - Unscribbled a few more classes.
+1.10 - One unscribbled class
 */
 
 GM_addStyle('.redacted-overlay { display:none !important; }'); // 4/11/18
@@ -28,6 +29,7 @@ GM_addStyle("p {font-family: Georgia, serif !important;}"); //1/17/20
 GM_addStyle("a {font-family: Georgia, serif !important;}"); //1/23/20
 GM_addStyle("em {font-family: Georgia, serif !important;}"); //1/23/20
 GM_addStyle('.subscriber-ad { display:none !important;'); //1/19/20
+GM_addStyle("h2 {font-family: Georgia, serif !important;}"); //7/20/20
 //GM_addStyle('.modal-content { display:none !important;'); //1/23/20
 
 // Reference: https://stackoverflow.com/questions/39884983/change-class-value-using-greasemonkey
