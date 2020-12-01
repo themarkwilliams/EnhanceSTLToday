@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name Enhance STLToday
-// @version 1.10
+// @version 1.11
 // @description "A user script to automatically bypass the paywall by marking the content as free."
 // @match http*://*.stltoday.com/*
-// @run-at document-start
+// @run-at      document-idle
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @require  http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
 // @grant GM_addStyle
@@ -18,6 +18,7 @@
 1.8 - Removed ad bars from UI
 1.9 - Unscribbled a few more classes.
 1.10 - One unscribbled class
+1.11 - Fixed some errors and cleaned script
 */
 
 GM_addStyle('.redacted-overlay { display:none !important; }'); // 4/11/18
@@ -30,12 +31,15 @@ GM_addStyle("a {font-family: Georgia, serif !important;}"); //1/23/20
 GM_addStyle("em {font-family: Georgia, serif !important;}"); //1/23/20
 GM_addStyle('.subscriber-ad { display:none !important;'); //1/19/20
 GM_addStyle("h2 {font-family: Georgia, serif !important;}"); //7/20/20
-//GM_addStyle('.modal-content { display:none !important;'); //1/23/20
+GM_addStyle('.modal-content { display:none !important;'); //12/1/20
 
 // Reference: https://stackoverflow.com/questions/39884983/change-class-value-using-greasemonkey
 waitForKeyElements (".subscriber-only", swapClass);
-waitForKeyElements (".modal-open", removeModal); //5/9/19
-waitForKeyElements ("body", removeOverflow); //5/22/19
+waitForKeyElements ("#lee-subscription-wall-modal", removeFade);
+waitForKeyElements ("body", removeModalClass); //5/22/19
+waitForKeyElements ("html", removeModalClass); //5/22/19
+waitForKeyElements ("body", removeModalClass); //12/1/20
+waitForKeyElements ("html", removeModalClass); //12/1/20
 
 function swapClass (jNode) {
     console.log('Swap Class break...');
@@ -47,32 +51,19 @@ function swapClass (jNode) {
     console.log("cleaned node : ", jNode);
 }
 
-function removeModal (jNode) { //5/9/19
-    //Reference: https://www.w3schools.com/howto/howto_js_remove_class.asp
-    console.log('Taking a break...');
-    sleep(5000);
-    console.log('Five  seconds later, ...');
-
-    var element = document.body;
-    element.classList.remove("modal-open");
-    element.style;
-    console.log("modal removed : ", jNode);
-
-    element = document.getElementById("lee-subscription-modal");
-    element.classList.remove("modal");
-    element.classList.remove("fade");
-    element.classList.remove("in");
-    GM_addStyle('.lee-subscription {display:none !important;}'); //5/9/19
-    GM_addStyle('.lee-subscription-modal {display:none !important;}'); //5/9/19
+function removeFade (jNode) {
+    jNode.removeClass("modal");
+    jNode.removeClass("modal fade in");
+    console.log("modal fade removed: ", jNode);
 }
 
-function removeOverflow (jNode) { //5/22/19
-    console.log('Overflow Class break...');
-    sleep(10000);
-    console.log('Ten seconds later, ...');
+//Reference: https://www.w3schools.com/howto/howto_js_remove_class.asp
 
-    jNode.removeClass("style");
-    console.log("cleaned node : ", jNode);
+function removeModalClass (jNode) {
+    //console.log ("Do you see this?");
+    console.log ("Cleaned node: ", jNode);
+    jNode.removeClass ("modal-open");
+    jNode.removeClass (".modal-open");
 }
 
 function sleep(ms) { //5/9/19
