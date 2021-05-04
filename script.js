@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Enhance STLToday
-// @version 1.12
+// @version 1.11
 // @description "A user script to automatically bypass the paywall by marking the content as free."
 // @match http*://*.stltoday.com/*
 // @run-at      document-idle
@@ -19,7 +19,6 @@
 1.9 - Unscribbled a few more classes.
 1.10 - One unscribbled class
 1.11 - Fixed some errors and cleaned script
-1.12 - Modal fix and dirtied the script
 */
 
 GM_addStyle('.redacted-overlay { display:none !important; }'); // 4/11/18
@@ -41,6 +40,7 @@ console.log('5 seconds later. . .');
 sleep(5000);
 waitForKeyElements ("body", removeModalClass); //12/1/20
 waitForKeyElements ("html", removeModalClass); //12/1/20
+waitForKeyElements ("[id$='lee-registration-wall']", killNode);
 
 function swapClass (jNode) {
     console.log('Swap Class break...');
@@ -61,6 +61,7 @@ function removeFade (jNode) {
     console.log("modal-open removed: ", jNode);
     jNode.removeClass(".modal-open");
     console.log(".modal-open removed: ", jNode);
+
 }
 
 //Reference: https://www.w3schools.com/howto/howto_js_remove_class.asp
@@ -70,6 +71,10 @@ function removeModalClass (jNode) {
     console.log ("Cleaned node: ", jNode);
     jNode.removeClass ("modal-open");
     jNode.removeClass (".modal-open");
+}
+function killNode (jNode) {
+    jNode.remove ();
+    console.log("lee-registration-wall : ", jNode);
 }
 
 function sleep(ms) { //5/9/19
