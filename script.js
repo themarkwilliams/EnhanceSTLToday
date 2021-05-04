@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Enhance STLToday
-// @version 1.11
+// @version 1.12
 // @description "A user script to automatically bypass the paywall by marking the content as free."
 // @match http*://*.stltoday.com/*
 // @run-at      document-idle
