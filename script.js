@@ -19,6 +19,7 @@
 1.9 - Unscribbled a few more classes.
 1.10 - One unscribbled class
 1.11 - Fixed some errors and cleaned script
+1.12 - Modal fix and dirtied the script
 */
 
 GM_addStyle('.redacted-overlay { display:none !important; }'); // 4/11/18
@@ -36,8 +37,8 @@ GM_addStyle('.modal-content { display:none !important;'); //12/1/20
 // Reference: https://stackoverflow.com/questions/39884983/change-class-value-using-greasemonkey
 waitForKeyElements (".subscriber-only", swapClass);
 waitForKeyElements ("#lee-subscription-wall-modal", removeFade);
-waitForKeyElements ("body", removeModalClass); //5/22/19
-waitForKeyElements ("html", removeModalClass); //5/22/19
+console.log('5 seconds later. . .');
+sleep(5000);
 waitForKeyElements ("body", removeModalClass); //12/1/20
 waitForKeyElements ("html", removeModalClass); //12/1/20
 
@@ -53,8 +54,13 @@ function swapClass (jNode) {
 
 function removeFade (jNode) {
     jNode.removeClass("modal");
+    console.log("modal removed: ", jNode);
     jNode.removeClass("modal fade in");
-    console.log("modal fade removed: ", jNode);
+    console.log("modal fade in removed: ", jNode);
+    jNode.removeClass("modal-open");
+    console.log("modal-open removed: ", jNode);
+    jNode.removeClass(".modal-open");
+    console.log(".modal-open removed: ", jNode);
 }
 
 //Reference: https://www.w3schools.com/howto/howto_js_remove_class.asp
